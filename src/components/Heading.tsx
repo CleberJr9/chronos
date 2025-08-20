@@ -2,15 +2,16 @@ import stylesHead from "./Heading.module.css";
 
 
 type HeadingProps = {
-  children: string; 
+  children: React.ReactNode; 
+
 }
 
 export const Heading = (props: HeadingProps) => {
   console.log({ stylesHead });
 
   return (
-    <div>
-      <h1 className={stylesHead.titulo}> {props.children}</h1>
+    <div className={stylesHead.heading}>
+      <h1 > {props.children}</h1>
     </div>
   );
 };

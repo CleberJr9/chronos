@@ -1,0 +1,25 @@
+.buttonIconPage {
+  background-color: var(--primary);
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border-color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  row-gap: 24px;
+  flex-direction: row;
+  margin: 6px;
+  color: var(--gray-900);
+  
+}
+.icon {
+  height: 24px;
+  width: 24px;
+}
+.IconsPage {
+  display: flex;
+  justify-content: center;
+  margin: 24px;
+}

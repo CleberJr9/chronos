@@ -1,10 +1,17 @@
 import "./styles/theme.css";
 import "./styles/global.css";
 import { Heading } from "./components/Heading";
+import { TimerIcon } from "lucide-react";
+import { IconsPage } from "./components/IconsPage";
+
+
 export const App = () => {
   return (
-    <div>
-      <Heading>Ola mundo</Heading>
-    </div>
+    <>
+    <IconsPage/>
+      <Heading> history <button><TimerIcon/></button> 
+      </Heading>
+      
+    </>
   );
 };
