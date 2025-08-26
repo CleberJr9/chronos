@@ -1,17 +1,25 @@
 import "./styles/theme.css";
 import "./styles/global.css";
-import { Heading } from "./components/Heading";
-import { TimerIcon } from "lucide-react";
-import { IconsPage } from "./components/IconsPage";
-
+import { Container } from "./components/container";
+import { Logo } from "./components/logo";
+import { Menu } from "./components/Menu";
+import { CountDown } from "./components/CountDown";
 
 export const App = () => {
   return (
     <>
-    <IconsPage/>
-      <Heading> history <button><TimerIcon/></button> 
-      </Heading>
-      
+    <Container>
+      <Logo/>
+    </Container>
+    
+    <Container>
+    <Menu/>
+    </Container>
+    <Container>
+      <CountDown/>
+    </Container>
+ 
+   
     </>
   );
 };

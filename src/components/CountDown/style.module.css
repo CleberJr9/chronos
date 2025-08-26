@@ -1,0 +1,8 @@
+.Cointainer{
+  font-size: clamp(80px, 25vw, 160px);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-weight: 700;
+  line-height: 1.3;
+}
