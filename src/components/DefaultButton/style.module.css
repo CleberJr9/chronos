@@ -1,0 +1,28 @@
+.defaultButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 42px;
+  width: 224px;
+  border-radius: 8px;
+  cursor: pointer;
+  
+}
+.defaultButton svg {
+  height: 32px;
+  width: 32px;
+
+  
+}
+
+.defaultButton:hover {
+  filter: brightness(90%);
+}
+.green {
+  background-color: var(--primary);
+  color: var(--text-over-primary);
+}
+.red {
+  background-color: var(--error);
+  color: var(--text-over-error);
+}

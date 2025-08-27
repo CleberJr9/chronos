@@ -1,0 +1,24 @@
+  .footerColunn{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    margin-top: 84px;
+    
+
+  }
+
+  .Links{
+    text-decoration: none;
+    color: var(--text-default);
+    font-size: 12px;
+  
+
+  }
+
+  .Links:hover{
+    text-decoration: underline;
+
+  }

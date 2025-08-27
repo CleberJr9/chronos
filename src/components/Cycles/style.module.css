@@ -1,0 +1,25 @@
+.cycles {
+  text-align: center;
+  justify-content: center;
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+}
+.Dots {
+  display: flex;
+  gap: 6px;
+}
+.Dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 24px;
+}
+.workTime {
+  background-color: var(--warning);
+}
+.shortBreakTime {
+  background-color: var(--primary);
+}
+.longBreakTime {
+  background-color: var(--info);
+}
