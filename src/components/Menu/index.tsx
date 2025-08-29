@@ -1,26 +1,73 @@
-import { HomeIcon, Settings, Sun,  HistoryIcon } from "lucide-react";
+import { HomeIcon, Settings, Sun, HistoryIcon, MoonIcon } from "lucide-react";
 import StylesIcons from "./style.module.css";
+import { useState, useEffect } from "react";
+
+type AvaliablesThemes = "dark" | "light"; // tipei as duas unicas opções de tema
 
 export const Menu = () => {
+  const [theme, settheme] = useState<AvaliablesThemes>(()=>{
+    const storageTheme = localStorage.getItem('theme') as AvaliablesThemes || "dark";
+    return storageTheme;
+
+  }); // no state o tipo vai ser o tema que eu declarei na tipagem AvaliablesThemes
+
+  // useEffect(() => {
+  // console.log(" sem dependencia", Date.now);
+  //});// ele  executa toda vez que o componente renderiza na pagina, sem dependecias
+
+  function handleThemeChange(
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) {
+    event.preventDefault(); // nao vai seguir o link
+    settheme((prevTheme) => {
+      const nextTheme = prevTheme === "dark" ? "light" : "dark"; // usando o set state usei para definir o tema
+      
+      return nextTheme;
+    });
+    
+  }
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme); // executa apenas quando o valor do theme muda
+    localStorage.setItem("theme",theme);
+  });
   return (
-   <>
-   <nav className= {StylesIcons.iconsContainer}>
-
-    <a className={StylesIcons.buttonIconPage} href="#">
-      <HomeIcon/>
-    </a>
-    <a className={StylesIcons.buttonIconPage} href="#">
-      <HistoryIcon/>
-    </a>
-    <a className={StylesIcons.buttonIconPage} href="#">
-      <Settings/>
-    </a>
-    <a className={StylesIcons.buttonIconPage} href="#">
-      <Sun/>
-    </a>
-
+    <>
+      <nav className={StylesIcons.iconsContainer}>
+        <a
+          className={StylesIcons.buttonIconPage}
+          href="#"
+          aria-label="início"
+          title="Ir para o início"
+        >
+          <HomeIcon />
+        </a>
+        <a
+          className={StylesIcons.buttonIconPage}
+          href="#"
+          aria-label="histórico"
+          title="Ir para o histórico"
+        >
+          <HistoryIcon />
+        </a>
+        <a
+          className={StylesIcons.buttonIconPage}
+          href="#"
+          aria-label="Configurações"
+          title="Ir para configurações"
+        >
+          <Settings />
+        </a>
+        <a
+          onClick={(event) => handleThemeChange(event)}
+          className={StylesIcons.buttonIconPage}
+          href="#"
+          aria-label="Tema"
+          title="Mudar tema"
+        >
+          {theme === "dark" && <Sun />}
+          {theme === "light" && <MoonIcon />}
+        </a>
       </nav>
-   
-   </>
+    </>
   );
 };

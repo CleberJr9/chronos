@@ -5,5 +5,5 @@
   display: flex;
   font-weight: 700;
   line-height: 1.3;
-  color: #fdfdfd;
+  color: var(--text-default);
 }
