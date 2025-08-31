@@ -1,4 +1,4 @@
-import { HomeIcon, Settings, Sun, HistoryIcon, MoonIcon } from "lucide-react";
+import { HomeIcon, Settings,  HistoryIcon, MoonIcon, SunIcon } from "lucide-react";
 import StylesIcons from "./style.module.css";
 import { useState, useEffect } from "react";
 
@@ -9,11 +9,12 @@ export const Menu = () => {
     const storageTheme = localStorage.getItem('theme') as AvaliablesThemes || "dark";
     return storageTheme;
 
-  }); // no state o tipo vai ser o tema que eu declarei na tipagem AvaliablesThemes
+  }); 
 
-  // useEffect(() => {
-  // console.log(" sem dependencia", Date.now);
-  //});// ele  executa toda vez que o componente renderiza na pagina, sem dependecias
+  const nextThemeIcon ={
+    dark: <SunIcon/>,
+    light: <MoonIcon/>
+  };
 
   function handleThemeChange(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -64,8 +65,7 @@ export const Menu = () => {
           aria-label="Tema"
           title="Mudar tema"
         >
-          {theme === "dark" && <Sun />}
-          {theme === "light" && <MoonIcon />}
+          {nextThemeIcon[theme]}
         </a>
       </nav>
     </>
