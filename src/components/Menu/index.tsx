@@ -1,20 +1,26 @@
-import { HomeIcon, Settings,  HistoryIcon, MoonIcon, SunIcon } from "lucide-react";
+import {
+  HomeIcon,
+  Settings,
+  HistoryIcon,
+  MoonIcon,
+  SunIcon,
+} from "lucide-react";
 import StylesIcons from "./style.module.css";
 import { useState, useEffect } from "react";
 
-type AvaliablesThemes = "dark" | "light"; // tipei as duas unicas opções de tema
+type AvaliablesThemes = "dark" | "light"; // tipagem de opções do tema 
 
 export const Menu = () => {
-  const [theme, settheme] = useState<AvaliablesThemes>(()=>{
-    const storageTheme = localStorage.getItem('theme') as AvaliablesThemes || "dark";
+  const [theme, settheme] = useState<AvaliablesThemes>(() => {
+    const storageTheme =
+      (localStorage.getItem("theme") as AvaliablesThemes) || "dark";
     return storageTheme;
+  });
 
-  }); 
-
-  const nextThemeIcon ={
-    dark: <SunIcon/>,
-    light: <MoonIcon/>
-  };
+  const nextThemeIcon = {
+    dark: <SunIcon />,
+    light: <MoonIcon />,
+  };  // declarando a chave com o nome do valor do tema, o valor sera um icone referente ao tema 
 
   function handleThemeChange(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -22,14 +28,13 @@ export const Menu = () => {
     event.preventDefault(); // nao vai seguir o link
     settheme((prevTheme) => {
       const nextTheme = prevTheme === "dark" ? "light" : "dark"; // usando o set state usei para definir o tema
-      
+
       return nextTheme;
     });
-    
   }
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme); // executa apenas quando o valor do theme muda
-    localStorage.setItem("theme",theme);
+    localStorage.setItem("theme", theme);
   });
   return (
     <>

@@ -1,21 +1,15 @@
-
 import { Defaultbutton } from "../DefaultButton";
 import { Cycles } from "../Cycles";
 import { DefaultInput } from "../DefaultInput";
-import styles from './style.module.css'
+import styles from "./style.module.css";
 import { PlayCircleIcon } from "lucide-react";
 
-type MainFormProps = {
-  input?: string;
-  children?: React.ReactNode;
-};
 
-export const MainForm = ({  children }: MainFormProps) => {
-  
+export const MainForm = () => {
   return (
     <>
-      <form className= {styles.form} action="">
-        <div className= {styles.formCollun}>
+      <form className={styles.form} action="">
+        <div className={styles.formCollun}>
           <DefaultInput
             label="Task"
             id="meuinput"
@@ -26,11 +20,10 @@ export const MainForm = ({  children }: MainFormProps) => {
       </form>
       <form action="" className={styles.form}>
         <div className={styles.formCollun}>
-          <p>Tarefa iniciada</p>
-      
+          <p></p>
         </div>
       </form>
-      {children}
+
       <form action="" className={styles.form}>
         <div className={styles.formCollun}>
           <Cycles />
