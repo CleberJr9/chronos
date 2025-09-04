@@ -8,7 +8,7 @@ import {
 import StylesIcons from "./style.module.css";
 import { useState, useEffect } from "react";
 
-type AvaliablesThemes = "dark" | "light"; // tipagem de opções do tema 
+type AvaliablesThemes = "dark" | "light"; // tipagem de opções do tema
 
 export const Menu = () => {
   const [theme, settheme] = useState<AvaliablesThemes>(() => {
@@ -20,7 +20,7 @@ export const Menu = () => {
   const nextThemeIcon = {
     dark: <SunIcon />,
     light: <MoonIcon />,
-  };  // declarando a chave com o nome do valor do tema, o valor sera um icone referente ao tema 
+  }; // declarando a chave com o nome do valor do tema, o valor sera um icone referente ao tema
 
   function handleThemeChange(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -35,7 +35,7 @@ export const Menu = () => {
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme); // executa apenas quando o valor do theme muda
     localStorage.setItem("theme", theme);
-  });
+  }, [theme]);
   return (
     <>
       <nav className={StylesIcons.iconsContainer}>

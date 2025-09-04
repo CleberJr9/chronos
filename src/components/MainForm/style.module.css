@@ -1,20 +1,10 @@
-form{
+form {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
 }
-
-.formCollun{
-  flex-direction: column;
-  display: flex;
-  gap: 12px;
-  text-align: center;
-  font-weight: 600;
-  font-size: 16px;
-}
-.form{
+.form {
   flex-direction: column;
   display: flex;
   gap: 12px;
@@ -23,19 +13,17 @@ form{
   text-align: center;
   font-weight: 600;
   font-size: 16px;
-
 }
 
-button{
+button {
   background-color: var(--primary);
   height: 44px;
   width: 236px;
   border-radius: 4px;
   border-style: none;
-
 }
 
-.icon{
+.icon {
   height: 32px;
   width: 32px;
 }
