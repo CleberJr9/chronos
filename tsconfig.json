@@ -1,8 +1,27 @@
 {
   "files": [],
-  "texttimModuleSyntax": true,
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    // Garante que os paths relativos e os imports fiquem consistentes
+    "moduleResolution": "node",
+    // Preserva exatamente a sintaxe de import/export do código-fonte
+    "verbatimModuleSyntax": true,
+    // Garantir que os tipos estejam corretos
+    "strict": true,
+    // Ajuda no debug
+    "sourceMap": true,
+    // Especifica que estamos usando módulos ECMAScript
+    "module": "ESNext",
+    // O alvo da transpilação, para browsers/Node modernos
+    "target": "ESNext",
+    // Aceita arquivos .ts e .tsx
+    "allowJs": false,
+    // Inclui checagem de null/undefined
+    "strictNullChecks": true,
+    // Resolve corretamente JSX se usar React
+    "jsx": "react-jsx"
+  }
 }

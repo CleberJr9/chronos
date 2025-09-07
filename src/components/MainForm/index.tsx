@@ -2,28 +2,44 @@ import { Defaultbutton } from "../DefaultButton";
 import { Cycles } from "../Cycles";
 import { DefaultInput } from "../DefaultInput";
 import styles from "./style.module.css";
-import { PlayCircleIcon } from "lucide-react";
+import {  PlayCircleIcon, StopCircleIcon } from "lucide-react";
 import { useRef } from "react";
 import type { TaskModel } from "../../models/TaskModel";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import { getNextCycle } from "../../utils/getNextCycle";
 import { getNextCycleType } from "../../utils/getNextCycleType";
-import { formatedSecondsToMinutes } from "../../utils/formatedSecondsToMinutes";
 
+import { TaskActionTypes } from "../../contexts/TaskContext/TaskActions";
 
 export const MainForm = () => {
   const valorInput = useRef<HTMLInputElement>(null);
-  const { state, setState } = useTaskContext();
-  console.log(state.currentCycle, 'valor do current cycle')
+  const { state, dispatch } = useTaskContext();
+  console.log(state.currentCycle, "valor do current cycle");
   // ciclos da proxima tarefa
   const nextCycle = getNextCycle(state.currentCycle);
   const nextTypeCycle = getNextCycleType(nextCycle);
 
-  
+  const tipsForWhenActiveTask = {
+    workTime: <span>Foque por <strong>{state.config.workTime}min</strong> </span>,
+    ShortBreakTime: <span>Descanse por <strong>{state.config.ShortBreakTime}min</strong> </span>,
+    LongBreakTime: <span>Descanso longo</span>,
+  };
+
+  const tipsForNoActiveTask = {
+    workTime: (
+      <span>
+        Próximo ciclo é de <strong>{state.config.workTime}min</strong>
+      </span>
+    ),
+    ShortBreakTime: (
+      <span>Próximo descaso é de <strong>{state.config.ShortBreakTime}min</strong> </span>
+    ),
+    LongBreakTime: <span>Próximo descanso será longo</span>,
+  };
 
   function HandleNewTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    
+
     if (valorInput.current === null) return; // ele para a função caso o valor do input esteja vazio na hora do submit
 
     const TaskName = valorInput.current.value.trim(); // declarando o  valor atual nome da tarefa
@@ -34,7 +50,7 @@ export const MainForm = () => {
     }
 
     const newTask: TaskModel = {
-      // declarando uma variavel do tipo do objeto que estamos criando
+      // declando o objeto de criação
       id: Date.now().toString(),
       name: TaskName,
       startDate: Date.now(),
@@ -43,18 +59,14 @@ export const MainForm = () => {
       duration: state.config[nextTypeCycle],
       type: nextTypeCycle,
     };
-    const secondsRemaining = newTask.duration * 60;
-    setState((prevState) => {
-      return {
-        ...prevState,
-        config: { ...prevState.config },
-        activeTask: newTask,
-        currentCycle: nextCycle, // realizar a crição depois
-        secondsRemaining,
-        formattedSecondsRemaining: formatedSecondsToMinutes(secondsRemaining),
-        tasks: [...prevState.tasks, newTask], // adicionando minha tarefa na lista de tasks sempre que adiciono pego o prev, adicionando o novo
-      };
-    });
+
+    dispatch({type: TaskActionTypes.START_TASK, payload:newTask})
+ 
+  }
+
+  function HandleStopTask(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
+   dispatch({type:TaskActionTypes.INTERRUPT_TASK})
   }
   return (
     <>
@@ -67,11 +79,37 @@ export const MainForm = () => {
           disabled={!!state.activeTask}
         />
 
-        <p>proxima tarefa é em 45 min</p>
+        {state.currentCycle > 0 && (
+          <div className={styles.form}>
+            {!!state.activeTask && tipsForWhenActiveTask[state.activeTask.type]}
+      {!state.activeTask && tipsForNoActiveTask[nextTypeCycle]}
+            <Cycles />
+          </div>
+        )}
 
-        <Cycles />
-
-        <Defaultbutton color="green" icon={<PlayCircleIcon />} id="button" />
+        {!state.activeTask && (
+          <Defaultbutton
+            aria-label="Iniciar nova tarefa"
+            title="nova tarefa"
+            type="submit"
+            color="green"
+            icon={<PlayCircleIcon />}
+            id="button"
+            key="button_submit"
+          />
+        )}
+        {!!state.activeTask && (
+          <Defaultbutton
+            onClick={(e) => HandleStopTask(e)}
+            aria-label="Parar tarefa atual"
+            title="interromper"
+            type="button"
+            color="red"
+            icon={<StopCircleIcon />}
+            id="button"
+            key="button_stop"
+          ></Defaultbutton>
+        )}
       </form>
     </>
   );
