@@ -14,7 +14,7 @@ import { TaskActionTypes } from "../../contexts/TaskContext/TaskActions";
 export const MainForm = () => {
   const valorInput = useRef<HTMLInputElement>(null);
   const { state, dispatch } = useTaskContext();
-  console.log(state.currentCycle, "valor do current cycle");
+  
   // ciclos da proxima tarefa
   const nextCycle = getNextCycle(state.currentCycle);
   const nextTypeCycle = getNextCycleType(nextCycle);
@@ -60,7 +60,8 @@ export const MainForm = () => {
       type: nextTypeCycle,
     };
 
-    dispatch({type: TaskActionTypes.START_TASK, payload:newTask})
+    dispatch({type: TaskActionTypes.START_TASK, payload:newTask});
+    
  
   }
 
