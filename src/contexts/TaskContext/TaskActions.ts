@@ -6,6 +6,7 @@
 // payload <- os dados extras enviados junto com a action, se necessário para atualizar o estado
 
 import { type TaskModel } from "../../models/TaskModel";
+import type { TaskStateModel } from "../../models/TaskStateModel";
 
 
 export enum TaskActionTypes {
@@ -13,7 +14,8 @@ export enum TaskActionTypes {
   INTERRUPT_TASK = "INTERRUPT_TASK",
   RESET_STATE = "RESET_STATE",
   COUNT_DOWN = "COUNT_DOWN",
-  COMPLETE_TASK = "COMPLETE_TASK"
+  COMPLETE_TASK = "COMPLETE_TASK",
+  SET_CONFIGS = "SET_CONFIGS"
 }
 
 export type TaskActionsWithPayload = | {
@@ -34,6 +36,10 @@ export type TaskActionsWithoutPayload =
     }|
     {
       type: TaskActionTypes.COMPLETE_TASK;
+    }|
+    {
+      type: TaskActionTypes.SET_CONFIGS; 
+      payload: TaskStateModel;
     };
 
 export type TaskActionModel =

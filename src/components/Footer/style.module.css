@@ -1,4 +1,4 @@
-  .footerColunn{
+  .footer {
     display: flex;
     justify-content: center;
     justify-items: center;
@@ -6,19 +6,17 @@
     text-align: center;
     gap: 12px;
     margin-top: 84px;
-    
+}
 
-  }
+  
 
-  .Links{
+  .footer a {
     text-decoration: none;
     color: var(--text-default);
     font-size: 12px;
-  
+}
 
-  }
-
-  .Links:hover{
-    text-decoration: underline;
-
-  }
+.footer a:hover {
+  color: var(--text-muted);
+  text-decoration: underline;
+}

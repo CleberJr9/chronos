@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 42px;
-  width: 224px;
+  max-width: 224px;
   border-radius: 8px;
   cursor: pointer;
   
@@ -13,6 +13,18 @@
   width: 32px;
 
   
+}
+
+.buttonIconDelete{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 42px;
+  width: 42px;
+  border-radius: 12px;
+  cursor: pointer;
+  
+
 }
 
 .defaultButton:hover {

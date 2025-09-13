@@ -10,7 +10,7 @@ export const Heading = (props: HeadingProps) => {
 
   return (
     <div className={stylesHead.heading}>
-      <h1> {props.children}</h1>
+      <h1 className={stylesHead.heading}> {props.children}</h1>
     </div>
   );
 };

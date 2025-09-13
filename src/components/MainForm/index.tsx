@@ -2,7 +2,7 @@ import { Defaultbutton } from "../DefaultButton";
 import { Cycles } from "../Cycles";
 import { DefaultInput } from "../DefaultInput";
 import styles from "./style.module.css";
-import {  PlayCircleIcon, StopCircleIcon } from "lucide-react";
+import { PlayCircleIcon, StopCircleIcon } from "lucide-react";
 import { useRef } from "react";
 import type { TaskModel } from "../../models/TaskModel";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
@@ -11,17 +11,28 @@ import { getNextCycleType } from "../../utils/getNextCycleType";
 
 import { TaskActionTypes } from "../../contexts/TaskContext/TaskActions";
 
+import { ShowAlert } from "../../Adapters/AlertToastfy";
+
 export const MainForm = () => {
   const valorInput = useRef<HTMLInputElement>(null);
   const { state, dispatch } = useTaskContext();
-  
+  const LastName = state.tasks[state.tasks.length - 1]?.name || "";
+
   // ciclos da proxima tarefa
   const nextCycle = getNextCycle(state.currentCycle);
   const nextTypeCycle = getNextCycleType(nextCycle);
 
   const tipsForWhenActiveTask = {
-    workTime: <span>Foque por <strong>{state.config.workTime}min</strong> </span>,
-    ShortBreakTime: <span>Descanse por <strong>{state.config.ShortBreakTime}min</strong> </span>,
+    workTime: (
+      <span>
+        Foque por <strong>{state.config.workTime}min</strong>{" "}
+      </span>
+    ),
+    ShortBreakTime: (
+      <span>
+        Descanse por <strong>{state.config.ShortBreakTime}min</strong>{" "}
+      </span>
+    ),
     LongBreakTime: <span>Descanso longo</span>,
   };
 
@@ -32,7 +43,9 @@ export const MainForm = () => {
       </span>
     ),
     ShortBreakTime: (
-      <span>Próximo descaso é de <strong>{state.config.ShortBreakTime}min</strong> </span>
+      <span>
+        Próximo descaso é de <strong>{state.config.ShortBreakTime}min</strong>{" "}
+      </span>
     ),
     LongBreakTime: <span>Próximo descanso será longo</span>,
   };
@@ -45,7 +58,8 @@ export const MainForm = () => {
     const TaskName = valorInput.current.value.trim(); // declarando o  valor atual nome da tarefa
 
     if (!TaskName) {
-      alert("digite o nome da tarefa"); // caso esteja vazio ele retorna e para execução, e emite um alert
+      ShowAlert.dismiss();
+      ShowAlert.warn("Digite o nome da tarefa"); // caso esteja vazio ele retorna e para execução, e emite um alert
       return;
     }
 
@@ -60,14 +74,16 @@ export const MainForm = () => {
       type: nextTypeCycle,
     };
 
-    dispatch({type: TaskActionTypes.START_TASK, payload:newTask});
-    
- 
+    dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
+    ShowAlert.dismiss();
+    ShowAlert.success("Tarefa iniciada");
   }
 
   function HandleStopTask(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
-   dispatch({type:TaskActionTypes.INTERRUPT_TASK})
+    dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
+    ShowAlert.dismiss();
+    ShowAlert.error("Tarefa interrompida");
   }
   return (
     <>
@@ -78,18 +94,20 @@ export const MainForm = () => {
           labelText="task"
           ref={valorInput}
           disabled={!!state.activeTask}
+          defaultValue={LastName}
         />
 
         {state.currentCycle > 0 && (
           <div className={styles.form}>
             {!!state.activeTask && tipsForWhenActiveTask[state.activeTask.type]}
-      {!state.activeTask && tipsForNoActiveTask[nextTypeCycle]}
+            {!state.activeTask && tipsForNoActiveTask[nextTypeCycle]}
             <Cycles />
           </div>
         )}
 
         {!state.activeTask && (
           <Defaultbutton
+            className="defaultButton"
             aria-label="Iniciar nova tarefa"
             title="nova tarefa"
             type="submit"
@@ -101,6 +119,7 @@ export const MainForm = () => {
         )}
         {!!state.activeTask && (
           <Defaultbutton
+            className="defaultButton"
             onClick={(e) => HandleStopTask(e)}
             aria-label="Parar tarefa atual"
             title="interromper"

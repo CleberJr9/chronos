@@ -7,6 +7,9 @@ import {
 } from "lucide-react";
 import StylesIcons from "./style.module.css";
 import { useState, useEffect } from "react";
+import { RouterLink } from "../RouterLink";
+
+
 
 type AvaliablesThemes = "dark" | "light"; // tipagem de opções do tema
 
@@ -25,7 +28,7 @@ export const Menu = () => {
   function handleThemeChange(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) {
-    event.preventDefault(); // nao vai seguir o link
+    event.preventDefault(); // nao vai seguir o RouterLink
     settheme((prevTheme) => {
       const nextTheme = prevTheme === "dark" ? "light" : "dark"; // usando o set state usei para definir o tema
 
@@ -39,37 +42,38 @@ export const Menu = () => {
   return (
     <>
       <nav className={StylesIcons.iconsContainer}>
-        <a
+        <RouterLink
           className={StylesIcons.buttonIconPage}
-          href="#"
+          to="/"
           aria-label="início"
           title="Ir para o início"
         >
           <HomeIcon />
-        </a>
-        <a
+        </RouterLink>
+        <RouterLink
           className={StylesIcons.buttonIconPage}
-          href="#"
+          to="/history"
           aria-label="histórico"
           title="Ir para o histórico"
         >
           <HistoryIcon />
-        </a>
-        <a
+        </RouterLink>
+        <RouterLink
           className={StylesIcons.buttonIconPage}
-          href="#"
+          to="/settings"
           aria-label="Configurações"
           title="Ir para configurações"
         >
           <Settings />
-        </a>
+        </RouterLink>
         <a
           onClick={(event) => handleThemeChange(event)}
           className={StylesIcons.buttonIconPage}
-          href="#"
+          href= ""
           aria-label="Tema"
           title="Mudar tema"
         >
+          
           {nextThemeIcon[theme]}
         </a>
       </nav>
