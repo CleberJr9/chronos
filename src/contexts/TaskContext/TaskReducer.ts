@@ -66,6 +66,8 @@ export function taskReducer(
           action.payload.secondsRemaining
         ),
       };
+    }case TaskActionTypes.SET_CONFIGS: {
+      return {... state, config:{...action.payload}}
     }
     
   }

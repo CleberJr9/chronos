@@ -5,9 +5,10 @@ import styles from "./style.module.css";
 import { useRef } from "react";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import { ShowAlert } from "../../Adapters/AlertToastfy";
+import { TaskActionTypes } from "../../contexts/TaskContext/TaskActions";
 
 export const Settings = () => {
-  const {state} = useTaskContext();
+  const {state, dispatch} = useTaskContext();
   const inputWorktime = useRef<HTMLInputElement>(null);
   const inputShortime = useRef<HTMLInputElement>(null);
   const inputLongtime = useRef<HTMLInputElement>(null);
@@ -18,21 +19,24 @@ export const Settings = () => {
     const ShortBreakTime = Number( inputShortime.current?.value);
     const LongBreakTime = Number (inputLongtime.current?.value);
 
-    if (isNaN(workTime) ){
+    if ( workTime > 99 || workTime < 1  ){
       ShowAlert.dismiss();
-      ShowAlert.error('Por favor utilize apenas números para foco')
+      ShowAlert.error('Por favor digite número entre 1 e 99 para foco')
       return;
     }
-    if (isNaN(ShortBreakTime) ){
+    if ( ShortBreakTime > 30 || ShortBreakTime < 1 ){
       ShowAlert.dismiss();
-      ShowAlert.error('Por favor utilize apenas números para descanso')
+      ShowAlert.error('Por favor digite número entre 1 e 30 descanso curto')
       return;
     }
-    if (isNaN(LongBreakTime) ){
+    if ( LongBreakTime > 60 || LongBreakTime < 1 ){
       ShowAlert.dismiss();
-      ShowAlert.error('Por favor utilize apenas números para descanso longo')
+      ShowAlert.error('Por favor digite número entre 1 e 30 descanso longo')
       return;
     }
+    dispatch({type: TaskActionTypes.SET_CONFIGS, payload: {workTime,ShortBreakTime, LongBreakTime}} );
+    ShowAlert.dismiss();
+    ShowAlert.success('Configurações salvas');
   }
 
   return (
@@ -45,6 +49,8 @@ export const Settings = () => {
           ref={inputWorktime}
           type="number"
           defaultValue={state.config.workTime}
+          min={1}
+          max={99}
         />
         <DefaultInput
           id="inputShortime"
@@ -52,6 +58,8 @@ export const Settings = () => {
           type="number"
           ref={inputShortime}
           defaultValue={state.config.ShortBreakTime}
+          min={1}
+          max={30}
         />
         <DefaultInput
           id="inputLongtime"
@@ -59,10 +67,12 @@ export const Settings = () => {
           type="number"
           ref={inputLongtime}
           defaultValue={state.config.LongBreakTime}
+          min={1}
+          max={60}
         />
         <Defaultbutton
           id="button"
-          type="button"
+       
           className="defaultButton"
           icon={<SaveIcon />}
         />
